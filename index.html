@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
+    <title>Typing Hero</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="page-shell">
+        <div class="game-wrap">
+            <header class="site-header">
+                <h1>Typing Hero</h1>
+                <p>Falling Word Challenge</p>
+            </header>
+            <section class="stats-row" aria-label="Game statistics">
+                <article class="stat-card">
+                    <p class="stat-label">Score</p>
+                    <p id="scoreDisplay" class="stat-value">0</p>
+                </article>
+                <article class="stat-card">
+                    <p class="stat-label">Lives</p>
+                    <p id="livesDisplay" class="stat-value danger-value">3</p>
+                </article>
+                <article class="stat-card">
+                    <p class="stat-label">Streak</p>
+                    <p id="streakDisplay" class="stat-value">0</p>
+                </article>
+                <article class="stat-card">
+                    <p class="stat-label">Speed</p>
+                    <p id="speedDisplay" class="stat-value">1.0x</p>
+                </article>
+                <article class="stat-card">
+                    <p class="stat-label">WPM</p>
+                    <p id="wpmDisplay" class="stat-value success-value">0</p>
+                </article>
+            </section>
+            <section class="game-layout">
+                <section id="panel" class="arcade-panel">
+                    <div class="cabinet-header">
+                        <div>
+                            <h2>Word Drop</h2>
+                            <p id="roundMessage" aria-live="polite">Ready</p>
+                        </div>
+                    </div>
+                    <div id="playField" class="play-field">
+                        <div id="wordLayer"></div>
+                        <div id="dangerLine">Miss Line</div>
+                        <div id="startOverlay" class="overlay">
+                                <div class="overlay-panel">
+                                <p class="overlay-kicker">3 Lives</p>
+                                <h3>Catch Every Word</h3>
+                                <p>Words fall from above. Finish one before it reaches the red line.</p>
+                                <span class="keyboard-action">PRESS ENTER</span>
+                                <small>Press Enter to start</small>
+                            </div>
+                        </div>
+                        <div id="gameOverOverlay" class="overlay hidden">
+                            <div class="overlay-panel">
+                                <p class="overlay-kicker">Run Ended</p>
+                                <h3>GAME OVER</h3>
+                                <p id="finalScore" aria-live="polite">Score: 0</p>
+                                <span class="keyboard-action">PRESS ENTER</span>
+                                <small>Press Enter to restart</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-area">
+                        <span>Type</span>
+                        <div id="typeInput" class="type-display is-empty" aria-live="polite">start typing...</div>
+                    </div>
+                </section>
+                <aside class="controls-panel arcade-panel control-card">
+                        <h3 class="panel-title">How It Works</h3>
+                        <ul class="panel-list">
+                            <li>Complete words clear instantly.</li>
+                            <li>A missed word costs one life.</li>
+                            <li>Streak adds a score bonus per word.</li>
+                            <li>Every 5-word streak increases the pace.</li>
+                            <li>You have 3 lives each run.</li>
+                        </ul>
+                </aside>
+            </section>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
