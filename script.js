@@ -104,3 +104,62 @@ function resetState() {
 
     updateDashboard();
 }
+
+function startGame() {
+
+    resetState();
+    game.running = true;
+    startOverlay.classList.add("hidden");
+    gameOverOverlay.classList.add("hidden");
+    roundMessage.textContent = "Running";
+
+    requestAnimationFrame(gameLoop);
+}
+    
+function endGame() {
+
+    game.running = false;
+    roundMessage.textContent = "Game Over";
+    finalScoreEl.textContent = `Score: ${game.score} · WPM: ${calculateWpm()}`;
+
+    gameOverOverlay.classList.remove("hidden");
+}
+
+function updateDashboard() {
+
+    scoreDisplay.textContent = game.score;
+    livesDisplay.textContent = game.lives;
+
+    streakDisplay.textContent = game.streak;
+    speedDisplay.textContent = `${game.speed.toFixed(1)}x`;
+    wpmDisplay.textContent = calculateWpm();
+}
+
+function calculateWpm() {
+
+    if(game.elapsedTime < 1000) {
+        return 0;
+    }
+
+    const minutes = game.elapsedTime / 60000;
+    return Math.round((game.typedCharacters / 5) / minutes);
+}
+
+function gameLoop(timestamp) {
+
+    if(!game.running) {
+        return;
+    }
+
+    if(!game.lastFrame) {
+        game.lastFrame = timestamp;
+    }
+
+    const delta = timestamp - game.lastFrame;
+    game.lastFrame = timestamp;
+
+    update(delta);
+    render();
+    requestAnimationFrame(gameLoop);
+}
+
