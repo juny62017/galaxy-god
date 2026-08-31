@@ -55,3 +55,52 @@ const game = {
     activeWords: []
 };
 
+
+
+let typedInput = "";
+
+function renderTypedInput() {
+    typeInput.textContent = typedInput || "start typing...";
+    typeInput.classList.toggle("is-empty", !typedInput);
+}
+
+function writeTypedInput(value) {
+    typedInput = value;
+    if("value" in typeInput) typeInput.value = value;
+    renderTypedInput();
+}
+
+function handleTypingKey(event) {
+    if(!game.running) return false;
+    if(event.key === "Backspace") {
+        writeTypedInput(typedInput.slice(0, -1));
+        handleTyping();
+        return true;
+    }
+    if(event.key.length === 1 && /^[a-zA-Z]$/.test(event.key)) {
+        writeTypedInput(typedInput + event.key.toLowerCase());
+        handleTyping();
+        return true;
+    }
+    return false;
+}
+
+function resetState() {
+    game.score = 0;
+    game.lives = 3;
+    game.streak = 0;
+    game.speed = 1;
+    game.elapsedTime = 0;
+    game.lastFrame = 0;
+    game.spawnTimer = 0;
+    game.spawnDelay = 1400;
+    game.wordId = 0;
+    game.typedCharacters = 0;
+    game.activeWords = [];
+
+    writeTypedInput("");
+    typeInput.classList.remove("input-error");
+    wordLayer.innerHTML ="";
+
+    updateDashboard();
+}
