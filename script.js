@@ -205,3 +205,58 @@ function spawnWord() {
     game.activeWords.push(word);
 
 }
+
+function moveWords(delta) {
+
+    for(const word of game.activeWords) {
+
+        word.y += (word.speed * delta) / 1000;
+        word.element.style.transform = `translate(${word.x}px, ${word.y}px)`;
+    }
+}
+
+function checkDangerLine() {
+
+    const dangerY = playField.clientHeight - 52;
+    const breached = game.activeWords.filter((word) => word.y >= dangerY);
+
+    for(const word of breached) {
+
+        word.element.remove();
+        game.lives = Math.max(0, game.lives - 1);
+        game.streak = 0;
+
+    }
+    
+    game.activeWords = game.activeWords.filter((word) => word.y < dangerY);
+
+    if(game.lives <= 0) {
+        endGame();
+    }
+}
+
+function handleTyping() {
+
+    if(!game.running) {
+        return;
+    }
+
+    const typed = typedInput;
+    typeInput.classList.toggle("input-error", typed.length > 0 && ! hasAnyPrefix(typed));
+    refreshWordHighlights();
+
+    if(!typed) {
+        return;
+    }
+    
+    const match = game.activeWords.find((word) => word.text === typed);
+
+    if(match) {
+        removeWord(match);
+        writeTypedInput("");
+        typeInput.classList.remove("input-error");
+        refreshWordHighlights();
+    }
+
+}
+
