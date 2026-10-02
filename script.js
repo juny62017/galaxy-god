@@ -163,3 +163,45 @@ function gameLoop(timestamp) {
     requestAnimationFrame(gameLoop);
 }
 
+function update(delta) {
+    game.elapsedTime += delta;
+    game.spawnTimer += delta;
+    
+    if(game.spawnTimer >= game.spawnDelay) {
+        game.spawnTimer = 0;
+        spawnWord();
+    }
+    moveWords(delta);
+    checkDangerLine();
+}
+
+function render() {
+    updateDashboard();
+}
+
+function spawnWord() {
+
+    const text = pickWord();
+    const fieldWidth = playField.clientWidth;
+    const blockWidth = Math.max(80, text.length * 14 + 28);
+    const x = getSpawnX(fieldWidth, blockWidth);
+
+    const element = document.createElement("div");
+    element.className = "word-block";
+    element.textContent = text;
+
+    wordLayer.appendChild(element);
+
+    const word = {
+        id: game.wordId,
+        text,
+        x,
+        y: -40,
+        speed: 45 + Math.random() * 18, 
+        element
+    };
+
+    game.wordId += 1;
+    game.activeWords.push(word);
+
+}
