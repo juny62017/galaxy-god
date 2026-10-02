@@ -297,3 +297,50 @@ function renderTypedLetters(word, typed) {
     }
     return html;
 }
+
+function removeWord(word) {
+
+    word.element.remove();
+    game.activeWords = game.activeWords.filter((item) => item.id !== word.id);
+
+    game.streak += 1;
+    game.typedCharacters += word.text.length;
+    game.score += 100 + game.streak * 10;
+
+    if(game.streak % 5 === 0) {
+
+        game.speed = Math.min(3.0, parseFloat((game.speed + 0.2).toFixed(1)));
+        game.spawnDelay = Math.max(600, game.spawnDelay - 100);
+    }
+
+}
+
+function pickWord() {
+
+    const index = Math.floor(Math.random() * wordQueue.length);
+    return wordQueue[index];
+}
+
+function getSpawnX(fieldWidth, blockWidth) {
+    const padding = 10;
+    const maxX = Math.max(padding, fieldWidth - blockWidth - padding);
+    return padding + Math.random() * (maxX - padding);
+}
+
+
+function handleGlobalKeydown(event) {
+    if(event.key === "Tab") {
+        event.preventDefault();
+        return;
+    }
+    if(event.key === "Enter") {
+        if(!game.running) startGame();
+        event.preventDefault();
+        return;
+    }
+    if(handleTypingKey(event)) event.preventDefault();
+}
+
+document.addEventListener("keydown", handleGlobalKeydown);
+
+updateDashboard();
