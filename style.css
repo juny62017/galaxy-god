@@ -310,3 +310,56 @@ button {
 .overlay-panel button:hover {
     background: #ffffff;
 }
+.stat-card + .stat-card {
+    border-left: 1px solid #2c2c2c;
+}
+@media (max-width: 760px) {
+    .game-layout {
+        grid-template-columns: 1fr;
+    }
+    .controls-panel {
+        display: none;
+    }
+    .stats-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .stat-card:nth-child(4),
+    .stat-card:nth-child(5) {
+        border-top: 1px solid #2c2c2c;
+    }
+    .stat-card:nth-child(4) {
+        border-left: 0;
+    }
+}
+@media (max-width: 480px) {
+    .site-header {
+        align-items: flex-start;
+    }
+    #roundMessage {
+        display: none;
+    }
+    .page-shell {
+        padding: 20px 10px;
+    }
+    .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .stat-card:nth-child(3),
+    .stat-card:nth-child(5) {
+        border-left: 0;
+    }
+    .play-field {
+        height: clamp(240px, calc(100vh - 390px), 330px);
+    }
+    .input-area {
+        grid-template-columns: 60px 1fr;
+    }
+}
+.cabinet-header p {
+    margin: 0;
+    color: #858585;
+    font-size: 12px;
+}
+.controls-panel li + li {
+    margin-top: 6px;
+}
