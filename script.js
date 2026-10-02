@@ -260,3 +260,40 @@ function handleTyping() {
 
 }
 
+function hasAnyPrefix(typed) {
+
+    return game.activeWords.some((word) => word.text.startsWith(typed));
+}
+
+function refreshWordHighlights() {
+
+    const typed = typedInput;
+
+    for(const word of game.activeWords) {
+
+        word.element.classList.toggle("targeted", typed.length > 0 && word.text.startsWith(typed));
+        word.element.innerHTML = renderTypedLetters(word.text, typed);
+    }
+}
+
+function renderTypedLetters(word, typed) {
+
+    let html = "";
+
+    for(let i=0; i<word.length; i+=1) {
+        const letter = word[i];
+
+        if(i < typed.length && typed[i] === letter) {
+            html += `<span class="correct-letter">${letter}</span>`;
+        }
+        
+        else if(i<typed.length) {
+            html += `<span class="wrong-letter">${letter}</span>`;
+        }
+
+        else{
+            html += letter;
+        }
+    }
+    return html;
+}
